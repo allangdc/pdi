@@ -1,8 +1,10 @@
 %PDI - Componentes RGB
 
+%windows size
 XSIZE=1300;
 YSIZE=900;
 
+%filename image
 IMG = "tigre.jpg";
 
 pkg load image
@@ -13,11 +15,8 @@ img = im2double( imread(IMG) );
 r = img(:,:,1);
 g = img(:,:,2);
 b = img(:,:,3);
-ar = r;
-ag = g;
-ab = b;
-media_aritmetica = ( (ar + ag + ab)./ 3 );
-soma_simetrica = (ar .* ag .* ab) ./ (1-ar-ag-ab+(ar.*ag)+(ar.*ab)+(ag.*ab));
+media_aritmetica = ( (r + g + b)./ 3.0 );
+soma_simetrica = (r .* g .* b) ./ (1.0-r-g-b+(r.*g)+(r.*b)+(g.*b));
 rgb_to_gray = rgb2gray(img);
 
 
