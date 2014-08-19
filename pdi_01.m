@@ -2,8 +2,8 @@
 
 XSIZE=1300;
 YSIZE=900;
-%IMG = "/home/allan/Pictures/tigre.jpg";
-IMG = "/home/allan/Pictures/rostos/A01.jpg";
+
+IMG = "tigre.jpg";
 
 pkg load image
 
