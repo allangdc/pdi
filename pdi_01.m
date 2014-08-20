@@ -18,6 +18,7 @@ b = img(:,:,3);
 media_aritmetica = ( (r + g + b)./ 3.0 );
 soma_simetrica = (r .* g .* b) ./ (1.0-r-g-b+(r.*g)+(r.*b)+(g.*b));
 rgb_to_gray = rgb2gray(img);
+luminancia = (0.299 .* r + 0.587 .* g + 0.114 .* b);
 
 
 figure('Name', 'Figura Original');
@@ -55,5 +56,11 @@ subplot(1,2,1)
 imshow(soma_simetrica);
 subplot(1,2,2)
 hist(soma_simetrica(:), 32);
+
+figure('Name', 'Luminância', 'Position', [0 0 XSIZE YSIZE]);
+subplot(1,2,1)
+imshow(luminancia);
+subplot(1,2,2)
+hist(luminancia(:), 32);
 
 pause;
