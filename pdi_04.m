@@ -1,6 +1,8 @@
 
 function retval = MSE(imgReal, imgNoised)
-    mat = (imgReal - imgNoised) .* (imgReal - imgNoised)
+    [l, c, chan] = size(imgReal);
+    err = (imgReal - imgNoised) .* (imgReal - imgNoised);
+    retval = sum( sum(err) ) / (l*c);
 endfunction;
 
 %windows size
@@ -20,15 +22,14 @@ imgSoma = zeros(lin, col);
 imgMedia = zeros(lin, col);
 ErrQuadSoma = zeros(lin, col);
 
-for i=1:5
+for i=1:1000
     n = imnoise(img, 'gaussian');
     imgSoma = imgSoma + n;
     imgMedia = imgSoma ./ i;
-    ErrQuadSoma = ErrQuadSoma + ((img - imgMedia) .* (img - imgMedia));
-    MSE = ErrQuadSoma ./ i;
+    erro = MSE(img, imgMedia);
 endfor;
 
 imshow(imgMedia);
-MSE
+erro
 
 pause;
