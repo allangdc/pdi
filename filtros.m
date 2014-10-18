@@ -1,10 +1,17 @@
+%
+% Trabalho Computacional PDI
+%
 % Filtros
+% 
+% Allan Galdino Dutra Cordeiro - 0322961
+% Walberto Fagner
+%
 
 IMG = 'lena.jpg';
 
 img1 = im2double(imread(IMG));
 
-%img1 = imnoise(img1, 'salt & pepper', 0.02);
+img1 = imnoise(img1, 'salt & pepper', 0.02);
 
 h1 = fspecial('laplacian', 0);      % kernel do filtro laplaciano
 
