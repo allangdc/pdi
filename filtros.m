@@ -4,32 +4,50 @@ IMG = 'lena.jpg';
 
 img1 = im2double(imread(IMG));
 
-r_img1 = imnoise(img1, ‘salt & pepper’, 0.1);
+r_img1 = imnoise(img1, 'salt & pepper', 0.1);
 
-h1 = fspecial('laplacian', 0);
+h1 = fspecial('laplacian', 0);      % kernel do filtro laplaciano
 
-h3 = fspecial('gaussian', 3, 3);
+h3 = fspecial('gaussian', 3, 3);    % kernel do filtro gaussiano
 h5 = fspecial('gaussian', 5, 3);
 h7 = fspecial('gaussian', 7, 3);
 
-img2 = conv2(img1, h3);
-img3 = conv2(img1, h5);
-img4 = conv2(img1, h7);
+% imagem sem ruido
+img2 = imfilter(img1,h3,'conv');
+img3 = imfilter(img1,h5,'conv');
+img4 = imfilter(img1,h7,'conv');
 
-
-img1l = conv2(img1, h1);
-img2l = conv2(img2, h1);
-img3l = conv2(img3, h1);
-img4l = conv2(img4, h1);
+% laplaciano da imagem
+img1l = imfilter(img1,h1,'conv');
+a = max(img1l(:));
+b = min(img1l(:));
+img1l = (img1l - b) ./ (a - b);
+img2l = imfilter(img2,h1,'conv');
+a = max(img2l(:));
+b = min(img2l(:));
+img2l = (img2l - b) ./ (a - b);
+img3l = imfilter(img3,h1,'conv');
+a = max(img3l(:));
+b = min(img3l(:));
+img3l = (img3l - b) ./ (a - b);
+img4l = imfilter(img4,h1,'conv');
+a = max(img4l(:));
+b = min(img4l(:));
+img4l = (img4l - b) ./ (a - b);
 
 
 f1 = figure('name','Imagem Original');
-subplot(1,2,1);
+subplot(2,2,1);
 imshow(img1);
 title('original');
-subplot(1,2,2);
+subplot(2,2,2);
 imshow(img1l);
 title('laplaciano original');
+subplot(2,2,3);
+hold on;
+plot(img1(:,250), 'r');
+plot(img1l(:,250), 'b');
+
 
 
 f2 = figure('name','Filtro Gaussiano 3x3');
