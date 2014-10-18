@@ -12,6 +12,11 @@ h3 = fspecial('gaussian', 3, 3);    % kernel do filtro gaussiano
 h5 = fspecial('gaussian', 5, 3);
 h7 = fspecial('gaussian', 7, 3);
 
+k = 3;
+h8 = fspecial('gaussian', 3, k*0.5) - fspecial('gaussian', 3, 0.5);    % kernel do filtro DoG
+h9 = fspecial('gaussian', 5, k*0.5) - fspecial('gaussian', 5, 0.5);    % kernel do filtro DoG
+h10 = fspecial('gaussian', 7, k*0.5) - fspecial('gaussian', 7, 0.5);   % kernel do filtro DoG
+
 % gaussiana da imagem
 img2 = imfilter(img1,h3,'conv');
 img3 = imfilter(img1,h5,'conv');
@@ -24,6 +29,11 @@ img1l = imfilter(img1,h1,'conv');
 img2l = imfilter(img2,h1,'conv');
 img3l = imfilter(img3,h1,'conv');
 img4l = imfilter(img4,h1,'conv');
+
+% diferença de gaussiana (DoG)
+img2d = imfilter(img1,h8,'conv');
+img3d = imfilter(img1,h9,'conv');
+img4d = imfilter(img1,h10,'conv');
 
 
 % laplaciano normalizado entre 0 e 255
@@ -39,6 +49,17 @@ img3ln = (img3l - b)/(a - b);
 a = max(img4l(:));
 b = min(img4l(:));
 img4ln = (img4l - b)/(a - b);
+
+% DoG entre 0 e 255
+a = max(img2d(:));
+b = min(img2d(:));
+img2dn = (img2d - b)/(a - b);
+a = max(img3d(:));
+b = min(img3d(:));
+img3dn = (img3d - b)/(a - b);
+a = max(img4d(:));
+b = min(img4d(:));
+img4dn = (img4d - b)/(a - b);
 
 % cruzamento por zero
 cross1 = edge(img1l,'zerocross');
@@ -105,3 +126,19 @@ title('cruzamento por zero');
 subplot(2,2,4);
 imshow(img4ln);
 title('laplaciano entre 0 e 255');
+
+
+
+f4 = figure('name','Filtro DoG');
+subplot(2,2,1);
+imshow(img1);
+title('Original');
+subplot(2,2,2);
+imshow(img2dn);
+title('DoG 3x3');
+subplot(2,2,3);
+imshow(img3dn);
+title('DoG 5x5');
+subplot(2,2,4);
+imshow(img4dn);
+title('DoG 7x7');
